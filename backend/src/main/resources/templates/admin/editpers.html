@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar colaborador - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main class="form-centro">
+        <h3>Editar colaborador</h3>
+
+        <form class="form-crud" autocomplete="off" method="post"
+            th:action="@{/admin/userlist/editar/{id}(id=${usuario.id})}">
+
+            <div class="field">
+                <input type="text" id="nombresApellidos" name="nombresApellidos" placeholder=" " autocomplete="off"
+                    th:value="${usuario.nombresApellidos}" required>
+                <label for="nombresApellidos">Nombre</label>
+            </div>
+
+            <div class="field">
+                <input type="text" id="dni" name="dni" placeholder=" " autocomplete="off" th:value="${usuario.dni}" required>
+                <label for="dni">DNI</label>
+            </div>
+
+            <div class="field">
+                <input type="text" id="telefono" name="telefono" placeholder=" " autocomplete="off"
+                    th:value="${usuario.telefono}" required>
+                <label for="telefono">Teléfono</label>
+            </div>
+
+            <div class="field">
+                <input type="email" id="correo" name="correo" placeholder=" " autocomplete="off"
+                    th:value="${usuario.correo}" required>
+                <label for="correo">Correo</label>
+            </div>
+
+            <div class="field">
+                <input type="text" id="username" name="username" placeholder=" " autocomplete="off"
+                    th:value="${usuario.usuario}" required>
+                <label for="username">Usuario</label>
+            </div>
+
+            <div class="field full-row">
+                <select name="rol" id="rolSelect" th:onchange="toggleSeccionEdit()">
+                    <option value="" disabled>Selecciona un rol</option>
+                    <option value="Director" th:selected="${usuario.rol == 'Director'}">Director</option>
+                    <option value="Docente" th:selected="${usuario.rol == 'Docente'}">Docente</option>
+                </select>
+                <label>Rol:</label>
+            </div>
+
+            <div class="field full-row" id="seccionContainer" th:if="${usuario.rol == 'Docente'}"
+                style="display: block;">
+                <select name="seccionId" id="seccionSelect">
+                    <option value="" disabled>Selecciona una sección</option>
+                    <option th:each="s : ${secciones}" th:value="${s.id}" th:text="${s.anio + ' ' + s.letra}"
+                        th:selected="${usuario.secciones.contains(s)}">
+                    </option>
+                </select>
+                <label>Sección:</label>
+            </div>
+
+            <button type="submit" class="full-row">Guardar cambios</button>
+        </form>
+    </main>
+
+    <script>
+        function toggleSeccionEdit() {
+            const rol = document.getElementById('rolSelect').value;
+            const container = document.getElementById('seccionContainer');
+            if (rol === 'Docente') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

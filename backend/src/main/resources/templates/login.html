@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/header :: header}"></div>
+    <div th:replace="~{layouts/nav :: nav}"></div>
+    <div class="body-wrapper">
+        <main>
+            <div class="login-box">
+
+                <form th:action="@{/login}" method="post" autocomplete="off">
+                    <div class="user-box">
+                        <input type="text" name="username" required="">
+                        <label>Usuario</label>
+                    </div>
+                    <div class="user-box">
+                        <input type="password" name="password" required="">
+                        <label>Contraseña</label>
+                    </div>
+
+                    <div th:if="${param.error}" class="error-message">
+                        <p>Usuario o contraseña incorrectos</p>
+                    </div>
+
+                    <center>
+                        <button type="submit">
+                            Iniciar sesión
+                            <span></span>
+                        </button>
+                    </center>
+                </form>
+            </div>
+        </main>
+        <div th:replace="~{layouts/footer :: footer}"></div>
+    </div>
+</body>
+
+</html>

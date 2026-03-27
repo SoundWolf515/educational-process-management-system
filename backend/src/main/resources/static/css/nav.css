@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
+
+.cebe-nav{
+    background-color: #26667F;
+    font-family: 'Montserrat';
+    padding: 5px 0;
+    position: sticky;
+    top: 120px;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.enlaces{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin: 0;
+    padding: 0;
+}
+
+.enlaces li a{
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    transition: ease-out 0.3s;
+}
+
+.enlaces li a:hover{
+    color: grey;
+}

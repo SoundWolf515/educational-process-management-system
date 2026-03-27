@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de personal - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <h3>Colaboradores registrados</h3>
+        <table>
+            <thead>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Sección</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr th:each="m: ${usuarios}">
+                    <th th:text="${m.nombresApellidos}"></th>
+                    <td th:text="${m.dni}"></td>
+                    <td th:text="${m.telefono}"></td>
+                    <td th:text="${m.correo}"></td>
+                    <td th:text="${m.rol}"></td>
+                    <td>
+                        <span th:if="${m.rol == 'Director'}">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+
+                        <span th:if="${m.rol == 'Docente'}">
+                            <span th:if="${m.secciones != null and m.secciones.size() > 0}"
+                                th:text="${m.secciones.iterator().next().anio + ' ' + m.secciones.iterator().next().letra}">
+                            </span>
+                            <span th:if="${m.secciones == null or m.secciones.size() == 0}">
+                                (Sin asignar)
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/admin/userlist/editar/' + ${m.id}}" class="editar">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <form th:action="@{'/admin/userlist/eliminar/' + ${m.id}}" method="post">
+                            <button class="eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+</body>
+
+</html>

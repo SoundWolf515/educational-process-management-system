@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de apoderados - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main class="apoderados">
+        <section style="display: flex; flex-direction: column; align-items: center;" id="apoderados">
+            <h3>Gestión de Apoderados</h3>
+            <div class="card card-top">
+                <div class="field campo-select">
+                    <select name="idEstudiante" onchange="location='?idEstudiante=' + this.value">
+                        <option disabled selected>Selecciona un estudiante</option>
+                        <option th:each="e : ${estudiantes}" th:value="${e.id}"
+                            th:selected="${estudianteSeleccionado != null and estudianteSeleccionado.id == e.id}"
+                            th:text="${e.nombre + ' ' + e.apellido}">
+                        </option>
+                    </select>
+                    <label>Estudiante</label>
+                </div>
+
+
+                <a th:href="${estudianteSeleccionado != null} ?
+             @{/admin/apoderados/pdf(idEstudiante=${estudianteSeleccionado.id})} :
+             '#'" style="text-decoration: none">
+
+                    <button class="btn-secundario" th:disabled="${estudianteSeleccionado == null}">
+                        Generar documentación de apoderados
+                    </button>
+                </a>
+
+            </div>
+
+            <div class="form-bloqueado" th:unless="${estudianteSeleccionado != null}">
+                <i class="fa-solid fa-lock"></i>
+                <h3>Seleccione un estudiante para comenzar</h3>
+            </div>
+
+            <form class="form-crud" th:if="${estudianteSeleccionado != null}" autocomplete="off" id="form-apoderado"
+                th:action="${modoEdicion} ? @{/admin/apoderados/actualizar} : @{/admin/registrar}" method="post"
+                th:object="${apoderado}">
+
+                <input type="hidden" th:field="*{id}" th:if="${modoEdicion}" />
+                <input type="hidden" name="idParentesco" th:value="${idParentesco}" />
+                <input type="hidden" name="idEstudiante"
+                    th:value="${estudianteSeleccionado != null ? estudianteSeleccionado.id : ''}" />
+
+                <div class="row-2">
+                    <div class="field">
+                        <input type="text" th:field="*{nombre}" id="apod-nombres" placeholder=" " required>
+                        <label>Nombres</label>
+                    </div>
+                    <div class="field">
+                        <input type="text" th:field="*{apellidos}" id="apod-apellidos" placeholder=" " required>
+                        <label>Apellidos</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <input type="text" th:field="*{dni}" id="apod-dni" placeholder=" " required> <label>DNI</label>
+                    </div>
+                    <div class="field">
+                        <input type="date" th:field="*{fechaNacimiento}" id="apod-fecha-nac" placeholder=" " required>
+                        <label>Fecha de
+                            nacimiento</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <select id="apod-sexo" th:field="*{sexo}" required>
+                            <option value="" disabled selected>Sexo</option>
+                            <option value="M">M</option>
+                            <option value="F">F</option>
+                        </select> <label>Sexo</label>
+                    </div>
+                    <div class="field">
+                        <select id="apod-vivo" th:field="*{estaVivo}" required>
+                            <option value="" disabled selected>Está vivo?</option>
+                            <option value="true">Sí</option>
+                            <option value="false">No</option>
+                        </select> <label>Está vivo</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <input type="text" th:field="*{direccion}" id="apod-direccion" placeholder=" " required>
+                        <label>Dirección</label>
+                    </div>
+                    <div class="field">
+                        <input type="text" th:field="*{lugarNacimiento}" id="apod-lugar-nac" placeholder=" " required>
+                        <label>Lugar de nacimiento</label>
+                    </div>
+                </div>
+                <div class="row-3">
+
+                    <div class="field"> <input type="text" th:field="*{departamento}" id="apod-departamento"
+                            placeholder=" " required>
+                        <label>Departamento</label>
+                    </div>
+                    <div class="field"> <input type="text" th:field="*{provincia}" id="apod-provincia" placeholder=" "
+                            required>
+                        <label>Provincia</label>
+                    </div>
+                    <div class="field"> <input type="text" th:field="*{distrito}" id="apod-distrito" placeholder=" "
+                            required>
+                        <label>Distrito</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <input type="text" th:field="*{lenguaMaterna}" id="apod-lengua-materna" placeholder=" ">
+                        <label>Lengua materna</label>
+                    </div>
+                    <div class="field"> <input type="text" th:field="*{segundaLengua}" id="apod-segunda-lengua"
+                            placeholder=" ">
+                        <label>Segunda lengua</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <select id="apod-religion" th:field="*{religion}" required>
+                            <option value="" disabled selected>Religión</option>
+                            <option value="Católica">Católica</option>
+                            <option value="Cristiana">Cristiana</option>
+                            <option value="Ninguna">Ninguna</option>
+                            <option value="Otra">Otra</option>
+                        </select>
+                        <label>Religión</label>
+                    </div>
+                    <div class="field">
+                        <select id="apod-vive-con" th:field="*{viveConEstudiante}" required>
+                            <option value="" disabled selected>¿Vive con el estudiante?</option>
+                            <option value="true">Sí</option>
+                            <option value="false">No</option>
+                        </select>
+
+                        <label>Vive con el estudiante</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <select id="apod-instruccion" th:field="*{gradoInstruccion}" required>
+                            <option value="" disabled selected>Grado de instrucción</option>
+                            <option value="Sin instrucción">Sin instrucción</option>
+                            <option value="Primaria">Primaria</option>
+                            <option value="Secundaria">Secundaria</option>
+                            <option value="Técnico">Técnico</option>
+                            <option value="Universitario">Universitario</option>
+                        </select>
+                        <label>Grado de instrucción</label>
+                    </div>
+                    <div class="field"> <input type="text" th:field="*{ocupacion}" id="apod-ocupacion" placeholder=" "
+                            required>
+                        <label>Ocupación</label>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field"> <input type="tel" th:field="*{telefono}" id="apod-telefono" placeholder=" "
+                            required>
+                        <label>Teléfono</label>
+                    </div>
+                    <div class="field"> <input type="email" th:field="*{correo}" id="apod-correo" placeholder=" ">
+                        <label>Correo</label>
+                    </div>
+                </div>
+                <div class="field row-2">
+                    <select name="relacion" required>
+                        <option value="" disabled>Selecciona relación</option>
+                        <option th:each="r : ${relaciones}" th:value="${r}" th:text="${r}"
+                            th:selected="${r == relacionSeleccionada}">
+                        </option>
+                    </select>
+                    <label>Relación</label>
+
+                    <div class="field">
+                        <select name="esPrincipal" required>
+                            <option value="false" th:selected="${esPrincipal != true}">No principal</option>
+                            <option value="true" th:selected="${esPrincipal == true}">Principal</option>
+                        </select>
+                        <label>¿Es apoderado principal?</label>
+                    </div>
+                </div>
+
+                <button type="submit" th:text="${modoEdicion} ?
+                 'Guardar cambios' :
+                 'Agregar apoderado'">
+                </button>
+            </form>
+            <!-- Tabla de apoderados registrados -->
+            <h3>Apoderados registrados</h3>
+            <table id="tabla-apoderados">
+                <thead>
+                    <tr>
+                        <th>Nombre completo</th>
+                        <th>DNI</th>
+                        <th>Teléfono</th>
+                        <th>Vive con el estudiante</th>
+                        <th>Principal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${parentescos}">
+                        <td th:text="${p.apoderado.nombre + ' ' + p.apoderado.apellidos}"></td>
+                        <td th:text="${p.apoderado.dni}"></td>
+                        <td th:text="${p.apoderado.telefono}"></td>
+                        <td th:text="${p.apoderado.viveConEstudiante ? 'Sí' : 'No'}"></td>
+                        <td>
+                            <form th:action="@{'/admin/principal/' + ${p.id}}" method="post">
+                                <input type="hidden" name="idEstudiante" th:value="${estudianteSeleccionado.id}">
+
+                                <input type="radio" name="principal" th:checked="${p.esPrincipal}"
+                                    onchange="this.form.submit()">
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{'/admin/apoderados/editar/' + ${p.id}}" method="get">
+                                <button class="editar">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </form>
+                            <form th:action="@{'/admin/apoderados/eliminar/' + ${p.id}}" method="post">
+                                <input type="hidden" name="idEstudiante" th:value="${estudianteSeleccionado.id}">
+                                <button class="eliminar">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+</body>
+
+</html>

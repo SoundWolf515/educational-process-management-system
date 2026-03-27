@@ -1,20 +1,20 @@
-#Java
-target/
+# Java
+backend/target/
 *.class
-*.jar
-*.war
 
-#Logs
-*.log
-
-#IDEs
+# IDE
 .vscode/
 .idea/
 
 # OS
 .DS_Store
 
+# Logs
+*.log
+
+# UPLOADS (VERY IMPORTANT)
+backend/src/main/resources/static/uploads
+backend/uploads
+
 # Env / credentials
 .env
-application.properties
-application.yml

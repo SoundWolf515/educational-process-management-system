@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .apoderado {
+            margin-bottom: 15px;
+        }
+        .fila {
+            display: flex;
+            justify-content: space-between;
+        }
+        .label {
+            font-weight: bold;
+        }
+        hr {
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>LISTA DE APODERADOS POR ESTUDIANTE</h2>
+
+<p>
+    <strong>Estudiante:</strong>
+    <span th:text="${estudiante.nombre + ' ' + estudiante.apellido}"></span>
+</p>
+
+<div th:each="p, iter : ${parentescos}" class="apoderado">
+
+    <p>
+        <strong>Apoderado</strong>
+        <span th:text="${iter.index + 1}"></span>
+    </p>
+
+    <div class="fila">
+        <span><span class="label">Nombre:</span>
+            <span th:text="${p.apoderado.nombre + ' ' + p.apoderado.apellidos}"></span>
+        </span>
+        <span><span class="label">DNI:</span>
+            <span th:text="${p.apoderado.dni}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Fecha nacimiento:</span>
+            <span th:text="${#dates.format(p.apoderado.fechaNacimiento, 'dd/MM/yyyy')}"></span>
+        </span>
+        <span><span class="label">Sexo:</span>
+            <span th:text="${p.apoderado.sexo}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Dirección:</span>
+            <span th:text="${p.apoderado.direccion}"></span>
+        </span>
+        <span><span class="label">Lugar nacimiento:</span>
+            <span th:text="${p.apoderado.lugarNacimiento}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Departamento:</span>
+            <span th:text="${p.apoderado.departamento}"></span>
+        </span>
+        <span><span class="label">Provincia:</span>
+            <span th:text="${p.apoderado.provincia}"></span>
+        </span>
+        <span><span class="label">Distrito:</span>
+            <span th:text="${p.apoderado.distrito}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Lengua materna:</span>
+            <span th:text="${p.apoderado.lenguaMaterna ?: 'No especifica'}"></span>
+        </span>
+        <span><span class="label">Segunda lengua:</span>
+            <span th:text="${p.apoderado.segundaLengua ?: 'No especifica'}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Religión:</span>
+            <span th:text="${p.apoderado.religion}"></span>
+        </span>
+        <span><span class="label">Vive con estudiante:</span>
+            <span th:text="${p.apoderado.viveConEstudiante ? 'Sí' : 'No'}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Grado instrucción:</span>
+            <span th:text="${p.apoderado.gradoInstruccion}"></span>
+        </span>
+        <span><span class="label">Ocupación:</span>
+            <span th:text="${p.apoderado.ocupacion}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Teléfono:</span>
+            <span th:text="${p.apoderado.telefono}"></span>
+        </span>
+        <span><span class="label">Correo:</span>
+            <span th:text="${p.apoderado.correo ?: '-'}"></span>
+        </span>
+        <span><span class="label">Está vivo:</span>
+            <span th:text="${p.apoderado.estaVivo ? 'Sí' : 'No'}"></span>
+        </span>
+    </div>
+
+    <div class="fila">
+        <span><span class="label">Relación:</span>
+            <span th:text="${p.relacion}"></span>
+        </span>
+        <span><span class="label">Principal:</span>
+            <span th:text="${p.esPrincipal ? 'Sí' : 'No'}"></span>
+        </span>
+    </div>
+
+    <hr/>
+</div>
+
+</body>
+</html>

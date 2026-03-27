@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <footer th:fragment="footer" class="cebe-footer">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" th:href="@{/css/footer.css}">
+        <a href="https://www.facebook.com/CEBE.Cajamarca" target="_blank" class="link"><i class="fab fa-facebook"></i> Facebook</a>
+        <hr>
+        <div class="copy">
+            <p>&copy; <span id="year"></span> - Centro de Educación Básica Especial - Cajamarca</p>
+        </div>
+        <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+</html>

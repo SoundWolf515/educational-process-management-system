@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+        }
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .informacion {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .tabla-estudiantes {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .tabla-estudiantes th, .tabla-estudiantes td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .tabla-estudiantes th {
+            background-color: #f2f2f2;
+        }
+        .tabla-estudiantes td {
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h3>Lista del Aula</h3>
+
+<div class="informacion">
+    <p><strong>Grado y sección:</strong> <span th:text="${seccion.anio + ' - ' + seccion.letra}"></span></p>
+    <p><strong>Lista de estudiantes</strong></p>
+</div>
+
+<table class="tabla-estudiantes">
+    <thead>
+        <tr>
+            <th>Estudiante</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Apoderado</th>
+            <th>Teléfono</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="e : ${estudiantes}">
+            <td th:text="${e.nombreEstudiante}"></td>
+            <td th:text="${e.direccion}"></td>
+            <td th:text="${e.estadoMatricula}"></td>
+            <td th:text="${e.nombreApoderado != null ? e.nombreApoderado : '(Sin asignar principal)'}"></td>
+            <td th:text="${e.telefonoApoderado != null ? e.telefonoApoderado : '-'}"></td>
+        </tr>
+        <tr th:if="${estudiantes == null || estudiantes.isEmpty()}">
+            <td colspan="5" style="text-align:center;">No hay estudiantes asignados en esta sección</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

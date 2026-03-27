@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grados y secciones - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/cursocontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <h3>Gestión de grados y secciones</h3>
+        <form class="addcurso" autocomplete="off" method="post" th:action="@{/admin/seccion}">
+            <div class="field campo-select">
+                    <select name="nivel">
+                        <option disabled selected>Nivel</option>
+                        <option value="PRITE">PRITE</option>
+                        <option value="Inicial">Inicial</option>
+                        <option value="Primaria">Primaria</option>
+                    </select>
+                    <label>Nivel</label>
+                </div>
+            <div class="field">
+                <input type="text" placeholder=" " id="anio" name="anio" required>
+                <label>Grado:</label>
+            </div>
+            <div class="field">
+                <input type="text" placeholder=" " id="letra" name="letra" required>
+                <label>Seccion:</label>
+            </div>
+            <button class="add" type="submit"><i class="fa-solid fa-plus"></i></button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nivel</th>
+                    <th>Grado</th>
+                    <th>Seccion</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="m: ${secciones}">
+                    <td th:text="${m.nivel}"></td>
+                    <th th:text="${m.anio}"></th>
+                    <th th:text="${m.letra}"></th>
+                    <td class="eliminarbg">
+                        <form th:action="@{'/admin/seccion/eliminar/' + ${m.id}}" method="post"
+                            onsubmit="return confirmDelete();">
+                            <button class="eliminar">
+                                <i class="fa-solid fa-x"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <script>
+        function confirmDelete() {
+            return confirm("¿Estás seguro de que deseas eliminar esta sección? \nEsto eliminará la sección de los alumnos matriculados aquí!");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscribir Estudiante - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <h3>Ficha de registro</h3>
+        <form class="form-crud" autocomplete="off" method="post" th:action="@{/admin/matricula}"
+            enctype="multipart/form-data">
+
+            <div class="tabs">
+                <button type="button" class="tab-btn active" data-tab="datos">Datos del estudiante</button>
+                <button type="button" class="tab-btn" data-tab="salud">Salud</button>
+                <button type="button" class="tab-btn" data-tab="matricula">Matrícula</button>
+                <button type="button" class="tab-btn" data-tab="discapacidad">Discapacidad</button>
+                <button type="button" class="tab-btn" data-tab="desarrollo">Desarrollo psicomotor</button>
+                <button type="button" class="tab-btn" data-tab="foto">Foto</button>
+            </div>
+            <section class="tab-content active" id="datos">
+
+                <h3>Datos del estudiante</h3>
+
+                <div class="row-2">
+                    <div class="field">
+                        <input type="text" name="nombre" placeholder=" " required>
+                        <label>Nombre</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="text" name="apellido" placeholder=" " required>
+                        <label>Apellidos</label>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="field">
+                        <input type="text" name="dni" placeholder=" " required>
+                        <label>DNI</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="date" name="fechaNacimiento" placeholder=" " required>
+                        <label>Fecha nac.</label>
+                    </div>
+                </div>
+
+                <div class="row-3">
+                    <div class="field">
+                        <select name="sexo" required>
+                            <option>M</option>
+                            <option>F</option>
+                        </select>
+                        <label>Sexo</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="number" name="num_hermanos" placeholder=" ">
+                        <label>Hermanos</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="text" name="telefono" placeholder=" " required>
+                        <label>Teléfono</label>
+                    </div>
+                </div>
+
+                <div class="row-1">
+                    <div class="field">
+                        <input type="text" name="direccion" placeholder=" " required>
+                        <label>Dirección</label>
+                    </div>
+                </div>
+
+                <div class="row-3">
+                    <div class="field">
+                        <input type="text" name="lengua_materna" placeholder=" " required>
+                        <label>Lengua materna</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="text" name="segunda_lengua" placeholder=" ">
+                        <label>2da lengua</label>
+                    </div>
+
+                    <div class="field">
+                        <select name="religion" required>
+                            <option>Católica</option>
+                            <option>Cristiana</option>
+                            <option>Ninguna</option>
+                            <option>Otra</option>
+                        </select>
+                        <label>Religión</label>
+                    </div>
+                </div>
+
+            </section>
+            <section class="tab-content" id="salud">
+
+                <h3>Datos de salud</h3>
+
+                <fieldset>
+                    <legend>Tipo de parto</legend>
+                    <label><input type="radio" name="tipo_parto" value="Normal" required> Normal</label>
+                    <label><input type="radio" name="tipo_parto" value="Cesarea"> Cesárea</label>
+                    <label><input type="checkbox" name="complicaciones"> ¿Hubo complicaciones?</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Tipo de sangre</legend>
+                    <label><input type="radio" name="tipo_sangre" value="A+" required> A+</label>
+                    <label><input type="radio" name="tipo_sangre" value="B+"> B+</label>
+                    <label><input type="radio" name="tipo_sangre" value="AB+"> AB+</label>
+                    <label><input type="radio" name="tipo_sangre" value="O+"> O+</label>
+                    <label><input type="radio" name="tipo_sangre" value="A-"> A-</label>
+                    <label><input type="radio" name="tipo_sangre" value="B-"> B-</label>
+                    <label><input type="radio" name="tipo_sangre" value="AB-"> AB-</label>
+                    <label><input type="radio" name="tipo_sangre" value="O-"> O-</label>
+                </fieldset>
+
+                <div class="field full-row campo-crud">
+                    <input type="text" id="inputEnfermedad" placeholder=" ">
+                    <label>Agregar enfermedad/alergia</label>
+                    <button type="button" class="btn-add" id="btnAddEnfermedad">+</button>
+                </div>
+
+                <ul id="listaEnfermedades" class="lista-crud"></ul>
+
+                <div class="field full-row campo-crud">
+                    <input type="text" id="inputVacuna" placeholder=" ">
+                    <label>Agregar vacuna</label>
+                    <button type="button" class="btn-add" id="btnAddVacuna">+</button>
+                </div>
+
+                <ul id="listaVacunas" class="lista-crud"></ul>
+
+                <ul id="listaVacunas" class="lista-crud"></ul>
+
+                <div class="field">
+                    <input type="text" name="trauma" placeholder=" ">
+                    <label>Experiencia traumática</label>
+                </div>
+
+            </section>
+            <section class="tab-content" id="matricula">
+                <h3>Información de matrícula</h3>
+
+                <div class="field">
+                    <select name="id_seccion">
+                        <option disabled selected>--Elegir sección--</option>
+                        <th:block th:each="sec : ${secciones}">
+                            <option th:value="${sec.id}" th:text="${sec.nivel + ' - ' + sec.letra + ' ' + sec.anio}">
+                            </option>
+                        </th:block>
+                    </select>
+                </div>
+
+            </section>
+            <section class="tab-content" id="discapacidad">
+
+                <h3>Ficha de discapacidad</h3>
+
+                <fieldset>
+                    <legend>¿Tiene discapacidad?</legend>
+
+                    <label>
+                        <input type="radio" name="discapacidad" value="Si" required id="siDiscapacidad">
+                        Sí
+                    </label>
+
+                    <label>
+                        <input type="radio" name="discapacidad" value="No" id="noDiscapacidad">
+                        No
+                    </label>
+                </fieldset>
+
+                <div class="row-1">
+                    <div class="field">
+                        <input type="text" name="tipo_discapacidad" placeholder=" " id="tipoDiscapacidad" disabled>
+                        <label>Tipo de discapacidad</label>
+                    </div>
+                </div>
+
+                <fieldset>
+                    <legend>Documentación:</legend>
+
+                    <label>
+                        <input type="checkbox" name="certificado">
+                        Certificado de discapacidad
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="informe_psicopedagogico">
+                        Informe psicopedagógico
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="plan_educativo_personalizado">
+                        Plan educativo personalizado
+                    </label>
+
+                </fieldset>
+
+            </section>
+            <section class="tab-content" id="desarrollo">
+
+                <h3>Desarrollo psicomotor</h3>
+
+                <p>*Edad en meses en la que alcanzó cada hito:</p>
+
+                <div class="row-3">
+                    <div class="field">
+                        <input type="number" name="levantar_cabeza" placeholder=" ">
+                        <label>Levantar cabeza</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="number" name="sentarse" placeholder=" ">
+                        <label>Sentarse</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="number" name="gatear" placeholder=" ">
+                        <label>Gatear</label>
+                    </div>
+                </div>
+
+                <div class="row-3">
+                    <div class="field">
+                        <input type="number" name="pararse" placeholder=" ">
+                        <label>Pararse</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="number" name="caminar" placeholder=" ">
+                        <label>Caminar</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="number" name="esfinteres" placeholder=" ">
+                        <label>Control de esfínteres</label>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="field">
+                        <input type="number" name="primeras_palabras" placeholder=" ">
+                        <label>Primeras palabras</label>
+                    </div>
+
+                    <div class="field">
+                        <input type="number" name="hablar_fluido" placeholder=" ">
+                        <label>Hablar fluido</label>
+                    </div>
+                </div>
+
+            </section>
+            <section class="tab-content" id="foto">
+                <h3>Foto del estudiante</h3>
+                <div class="field full-row" style="text-align:center;">
+                    <input type="file" name="fotoArchivo" accept="image/*" style="padding: 12px;">
+                </div>
+            </section>
+            <button type="submit" class="btn-submit">Matricular</button>
+        </form>
+    </main>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabs.forEach(b => b.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                btn.classList.add('active');
+
+                const id = btn.dataset.tab;
+                document.getElementById(id).classList.add('active');
+            });
+        });
+
+        /* --- ENFERMEDADES --- */
+        document.getElementById("btnAddEnfermedad").addEventListener("click", () => {
+            const input = document.getElementById("inputEnfermedad");
+            const texto = input.value.trim();
+            if (texto === "") return;
+
+            const ul = document.getElementById("listaEnfermedades");
+            const li = document.createElement("li");
+
+            li.innerHTML = `
+            ${texto}
+            <input type="hidden" name="alergias[]" value="${texto}">
+            <button type="button" class="eliminar"><i class="fa-solid fa-x"></i></button>
+        `;
+
+            ul.appendChild(li);
+            input.value = "";
+        });
+
+        /* --- VACUNAS --- */
+        document.getElementById("btnAddVacuna").addEventListener("click", () => {
+            const input = document.getElementById("inputVacuna");
+            const texto = input.value.trim();
+            if (texto === "") return;
+
+            const ul = document.getElementById("listaVacunas");
+            const li = document.createElement("li");
+
+            li.innerHTML = `
+            ${texto}
+            <input type="hidden" name="vacunas[]" value="${texto}">
+            <button type="button" class="eliminar"><i class="fa-solid fa-x"></i></button>
+        `;
+
+            ul.appendChild(li);
+            input.value = "";
+        });
+
+        /* --- ELIMINAR ITEMS --- */
+        document.addEventListener("click", e => {
+            const btn = e.target.closest(".eliminar");
+            if (btn) {
+                btn.parentElement.remove();
+            }
+        });
+
+
+        const siDiscapacidad = document.getElementById("siDiscapacidad");
+        const noDiscapacidad = document.getElementById("noDiscapacidad");
+        const tipoDiscapacidad = document.getElementById("tipoDiscapacidad");
+
+        function toggleTipoDiscapacidad() {
+            if (siDiscapacidad.checked) {
+                tipoDiscapacidad.disabled = false;
+            } else {
+                tipoDiscapacidad.disabled = true;
+                tipoDiscapacidad.value = "";
+            }
+        }
+
+        siDiscapacidad.addEventListener("change", toggleTipoDiscapacidad);
+        noDiscapacidad.addEventListener("change", toggleTipoDiscapacidad);
+
+        toggleTipoDiscapacidad();
+
+        const selectSeccion = document.getElementById('id_seccion');
+        const inputNivel = document.getElementById('nivel');
+
+        selectSeccion.addEventListener('change', function () {
+            const selectedOption = selectSeccion.options[selectSeccion.selectedIndex];
+            const nivel = selectedOption.getAttribute('data-nivel');
+
+            inputNivel.value = nivel;
+        });
+    </script>
+</body>
+
+</html>

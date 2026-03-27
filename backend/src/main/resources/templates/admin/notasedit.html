@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar notas - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <h3>Editar notas</h3>
+
+        <div class="field campo-select">
+            <input class="campo" th:value="${estudiante.nombre + ' ' + estudiante.apellido}" disabled>
+            <label>Estudiante</label>
+        </div>
+
+        <form th:action="@{/admin/notas/guardar}" method="post">
+
+            <input type="hidden" name="matriculaId" th:value="${matricula.id}">
+
+            <div class="notas-actions">
+                <button type="submit" class="btn-guardar-notas">
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <th>Área</th>
+                    <th>1er semestre</th>
+                    <th>2do semestre</th>
+                    <th>Promedio</th>
+                </thead>
+                <tbody>
+                    <tr th:each="fila, stat : ${filasNotas}">
+                        <th th:text="${fila.curso.nombre}"></th>
+
+                        <td>
+                            <input type="number" min="0" max="20" th:name="|notas[${stat.index}].notaSem1|"
+                                th:value="${fila.notaSem1 != null ? fila.notaSem1 : 0}">
+                        </td>
+
+                        <td>
+                            <input type="number" min="0" max="20" th:name="|notas[${stat.index}].notaSem2|"
+                                th:value="${fila.notaSem2 != null ? fila.notaSem2 : 0}">
+                        </td>
+
+                        <td th:text="${fila.promedio != null ? fila.promedio : '-'}"></td>
+
+                        <input type="hidden" th:name="|notas[${stat.index}].cursoId|" th:value="${fila.curso.id}">
+                    </tr>
+                </tbody>
+            </table>
+            
+        </form>
+    </main>
+</body>
+
+</html>

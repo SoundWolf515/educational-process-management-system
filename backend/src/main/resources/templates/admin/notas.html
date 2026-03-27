@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relación de notas - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main style="display: flex; flex-direction: column; align-items: center;" id="apoderados">
+        <h3>Gestión de notas</h3>
+
+        <div class="card card-top">
+            <div class="field campo-select">
+                <select name="idSeccion" onchange="location='?idSeccion=' + this.value">
+                    <option disabled selected>Selecciona una sección</option>
+                    <option th:each="s : ${secciones}" th:value="${s.id}"
+                        th:selected="${seccionSeleccionada != null and seccionSeleccionada.id == s.id}"
+                        th:text="${s.nivel + ' - ' + s.anio + ' ' + s.letra}">
+                    </option>
+                </select>
+                <label>Sección</label>
+            </div>
+            <div class="field campo-select" th:if="${seccionSeleccionada != null}">
+                <select name="idEstudiante"
+                    th:onchange="|location='?idSeccion=${seccionSeleccionada.id}&idEstudiante=' + this.value|">
+
+                    <option disabled selected>Selecciona un estudiante</option>
+
+                    <option th:each="e : ${estudiantes}" th:value="${e.id}"
+                        th:selected="${estudianteSeleccionado != null and estudianteSeleccionado.id == e.id}"
+                        th:text="${e.nombre + ' ' + e.apellido}">
+                    </option>
+                </select>
+                <label>Estudiante</label>
+            </div>
+        </div>
+
+        <div class="form-bloqueado" th:unless="${estudianteSeleccionado != null}">
+            <i class="fa-solid fa-lock"></i>
+            <h3>Seleccione un estudiante para comenzar</h3>
+        </div>
+
+        <div th:if="${estudianteSeleccionado != null}" style="width: 80%;">
+            <a th:href="@{/admin/notasedit(matriculaId=${estudianteSeleccionado.matricula.id})}">
+                <button class="btn-editar-notas">
+                    <i class="fa-solid fa-pen"></i> Editar notas
+                </button>
+            </a>
+
+
+            <table>
+                <thead>
+                    <th>Área</th>
+                    <th>1er semestre</th>
+                    <th>2do semestre</th>
+                    <th>Promedio</th>
+                </thead>
+                <tbody>
+                    <tr th:each="fila : ${filasNotas}">
+                        <th th:text="${fila.curso.nombre}"></th>
+                        <td th:text="${fila.notaSem1 != null ? fila.notaSem1 : '-'}"></td>
+                        <td th:text="${fila.notaSem2 != null ? fila.notaSem2 : '-'}"></td>
+                        <td th:text="${fila.promedio != null ? fila.promedio : '-'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a th:href="@{/admin/notas/pdf(matriculaId=${estudianteSeleccionado.matricula.id})}">
+                <button class="btn-guardar-notas">
+                    <i class="fa-solid fa-folder-plus"></i> Generar reporte de notas
+                </button>
+            </a>
+        </div>
+    </main>
+</body>
+
+</html>

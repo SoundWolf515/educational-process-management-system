@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de estudiantes - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <h3>Ficha del estudiante</h3>
+
+        <div class="modal-section" style="text-align:center;">
+            <img id="modal-foto" th:src="@{${estudiante != null and estudiante.foto != null 
+                     ? '/uploads/estudiantes/' + estudiante.foto 
+                     : '/img/default.jpg'}}" alt="Foto del estudiante"
+                style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:15px;">
+        </div>
+
+        <div style="text-align:center; margin-top:15px;">
+            <a th:href="@{/admin/ficha-estudiante/pdf/{id}(id=${estudiante.id})}" style="text-decoration: none;">
+                <button id="btnExportPDF"
+                    style="background:#26667F; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">
+                    Exportar a PDF
+                </button>
+            </a>
+        </div>
+
+
+
+        <div class="modal-section" id="modal-datos-personales">
+            <h4>Datos personales</h4>
+            <p><strong>Nombre:</strong> <span id="modal-nombre" th:text="${estudiante.nombre}"></span></p>
+            <p><strong>Apellidos:</strong> <span id="modal-apellidos" th:text="${estudiante.apellido}"></span></p>
+            <p><strong>DNI:</strong> <span id="modal-dni" th:text="${estudiante.dni}"></span></p>
+            <p><strong>Fecha de nacimiento:</strong> <span id="modal-fecha-nac"
+                    th:text="${estudiante.fechaNacimiento}"></span></p>
+            <p><strong>Sexo:</strong> <span id="modal-sexo" th:text="${estudiante.sexo}"></span></p>
+            <p><strong>Teléfono:</strong> <span id="modal-telefono" th:text="${estudiante.telefono}"></span></p>
+            <p><strong>Dirección:</strong> <span id="modal-direccion" th:text="${estudiante.direccion}"></span></p>
+        </div>
+
+        <div class="modal-section" id="modal-lenguas">
+            <h4>Lenguas y religión</h4>
+            <p><strong>Lengua materna:</strong> <span id="modal-lengua" th:text="${expediente.lengua_materna}"></span>
+            </p>
+            <p><strong>Segunda lengua:</strong> <span id="modal-segunda-lengua"
+                    th:text="${expediente.segunda_lengua}"></span></p>
+            <p><strong>Religión:</strong> <span id="modal-religion" th:text="${estudiante.religion}"></span></p>
+        </div>
+
+        <div class="modal-section" id="modal-matricula">
+            <h4>Matrícula</h4>
+            <p><strong>Nivel:</strong> <span id="modal-nivel" th:text="${seccion.getNivel()}"></span></p>
+            <p><strong>Grado/Sección:</strong> <span id="modal-grado"
+                    th:text="${seccion.getAnio()} + ' ' + ${seccion.getLetra()}"></span></p>
+        </div>
+
+        <div class="modal-section" id="modal-salud">
+            <h4>Salud</h4>
+            <p><strong>Tipo de parto:</strong> <span id="modal-parto" th:text="${expediente.tipo_parto}"></span></p>
+            <p><strong>Tipo de sangre:</strong> <span id="modal-sangre" th:text="${expediente.tipo_sangre}"></span></p>
+            <p><strong>Complicaciones:</strong> <span id="modal-complicaciones"
+                    th:text="${expediente.complicaciones}"></span></p>
+            <p><strong>Enfermedades/alergias:</strong> <span id="modal-enfermedades"
+                    th:text="${#lists.size(alergias) > 0 ? alergias : 'Ninguna'}"></span></p>
+            <p><strong>Vacunas:</strong> <span id="modal-vacunas"
+                    th:text="${#lists.size(vacunas) > 0 ? vacunas : 'Ninguna'}"></span></p>
+            <p><strong>Experiencia traumática:</strong> <span id="modal-trauma" th:text="${expediente.trauma}"></span>
+            </p>
+        </div>
+
+        <div class="modal-section" id="modal-discapacidad">
+            <h4>Discapacidad</h4>
+            <p><strong>Tiene discapacidad:</strong> <span id="modal-discapacidad-si-no"
+                    th:text="${expediente.discapacidad != null ? 'Sí' : 'No'}"></span></p>
+            <p><strong>Documentación:</strong> <span id="modal-doc-discapacidad"
+                    th:text="${expediente.tipo_discapacidad != null ? expediente.tipo_discapacidad : 'Ninguna'}"></span>
+            </p>
+        </div>
+
+        <div class="modal-section" id="modal-desarrollo">
+            <h4>Desarrollo psicomotor</h4>
+
+            <div th:each="hito : ${desarrolloPsicomotor}">
+                <p><strong th:text="${hito.hito} + ':'"></strong>
+                    <span th:text="${hito.edad != null ? hito.edad : 0}"></span> meses
+                </p>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>

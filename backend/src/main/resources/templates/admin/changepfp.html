@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Áreas - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main class="bienvenida">
+        <form method="POST" enctype="multipart/form-data" th:action="@{/admin/guardarUsuario}">
+            <div class="field">
+                <input type="file" name="imagen" accept="image/*" />
+                <label for="imagen">Cargar imagen de perfil</label>
+            </div>
+            <button type="submit">Guardar</button>
+        </form>
+    </main>
+
+</body>
+
+</html>

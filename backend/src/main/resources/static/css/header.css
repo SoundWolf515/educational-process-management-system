@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
+
+.cebe-header{
+    background-color: #fff;
+    font-family: 'Montserrat';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.redirect{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #3C7DBD;
+}
+
+.cebe-header .logo{
+    height: 70px;
+}
+
+.cebe-header h1{
+    margin: 0 10px;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.btn-acceder{
+    margin: 15px;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #124170;
+    background-color: white;
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: 2px solid #124170;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 0 #124170;
+}
+
+.icono-flecha{
+    font-size: 1.2rem;
+}
+
+.btn-acceder:hover{
+    color: white;
+    box-shadow: inset 0 -100px 0 0 #124170;
+}
+
+.btn-acceder:active{
+    transform: scale(0.9);
+}

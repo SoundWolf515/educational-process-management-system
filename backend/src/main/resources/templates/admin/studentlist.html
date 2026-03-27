@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de estudiantes - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <h3>Estudiantes matriculados</h3>
+
+        <div class="card-top">
+            <div class="field">
+                <input type="text" id="buscarNombre" placeholder="Ingrese un nombre" autocomplete="off">
+                <label for="nombre">Buscar por nombre</label>
+            </div>
+        </div>
+        <table class="tabla-estudiantes">
+            <thead>
+                <tr>
+                    <th>Estudiante</th>
+                    <th>Grado y sección</th>
+                    <th>DNI</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="estudiante : ${estudiantes}">
+                    <td th:text="${estudiante.nombre} + ' ' + ${estudiante.apellido}"></td>
+                    <td
+                        th:text="${estudiante.matricula != null && estudiante.matricula.seccion != null ? estudiante.matricula.seccion.anio + ' ' + estudiante.matricula.seccion.letra : 'Sin sección asignada'}">
+                    </td>
+                    <td th:text="${estudiante.dni}"></td>
+                    <td th:text="${estudiante.direccion}"></td>
+                    <td th:text="${estudiante.telefono}"></td>
+
+                    <td class="acciones">
+                        <a th:href="@{/admin/ficha-estudiante/{id}(id=${estudiante.id})}">
+                            <button class="ver">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </a>
+                        <form th:action="@{'/admin/listaestudiantes/eliminar/' + ${estudiante.id}}" method="post">
+                            <button class="eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button id="prevPage" class="prev-page">Anterior</button>
+            <span id="pageInfo" class="page-info"></span>
+            <button id="nextPage" class="next-page">Siguiente</button>
+        </div>
+
+    </main>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputBuscar = document.getElementById('buscarNombre');
+            const tablaEstudiantes = document.querySelector('.tabla-estudiantes tbody');
+            inputBuscar.addEventListener('input', function () {
+                const query = inputBuscar.value.toLowerCase();
+
+                const filas = tablaEstudiantes.querySelectorAll('tr');
+
+                filas.forEach(function (fila) {
+
+                    const nombreEstudiante = fila.querySelector('td').textContent.toLowerCase();
+
+                    if (nombreEstudiante.includes(query)) {
+                        fila.style.display = '';
+                    } else {
+                        fila.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputBuscar = document.getElementById('buscarNombre');
+            const tablaEstudiantes = document.querySelector('.tabla-estudiantes tbody');
+            const filas = Array.from(tablaEstudiantes.querySelectorAll('tr'));
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+
+            const estudiantesPorPagina = 10;
+            let paginaActual = 1;
+
+            function mostrarPaginas() {
+                const query = inputBuscar.value.toLowerCase();
+                const estudiantesFiltrados = filas.filter(fila => {
+                    const nombreEstudiante = fila.querySelector('td').textContent.toLowerCase();
+                    return nombreEstudiante.includes(query);
+                });
+
+                const totalPaginas = Math.ceil(estudiantesFiltrados.length / estudiantesPorPagina);
+
+                const inicio = (paginaActual - 1) * estudiantesPorPagina;
+                const fin = paginaActual * estudiantesPorPagina;
+
+                filas.forEach((fila, index) => {
+                    if (index >= inicio && index < fin && estudiantesFiltrados.includes(fila)) {
+                        fila.style.display = '';
+                    } else {
+                        fila.style.display = 'none';
+                    }
+                });
+
+                pageInfo.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+
+                prevButton.disabled = paginaActual === 1;
+                nextButton.disabled = paginaActual === totalPaginas;
+            }
+
+            inputBuscar.addEventListener('input', function () {
+                paginaActual = 1;
+                mostrarPaginas();
+            });
+
+            prevButton.addEventListener('click', function () {
+                if (paginaActual > 1) {
+                    paginaActual--;
+                    mostrarPaginas();
+                }
+            });
+
+            nextButton.addEventListener('click', function () {
+                const totalPaginas = Math.ceil(filas.filter(fila => fila.style.display !== 'none').length / estudiantesPorPagina);
+                if (paginaActual < totalPaginas) {
+                    paginaActual++;
+                    mostrarPaginas();
+                }
+            });
+
+            mostrarPaginas();
+        });
+    </script>
+</body>
+
+</html>

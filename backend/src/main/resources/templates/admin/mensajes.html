@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main>
+        <table class="mensajes">
+            <h3>Mensajes</h3>
+            <thead>
+                <tr>
+                    <th>Marcar como leído</th>
+                    <th>Nombre</th>
+                    <th>Contacto</th>
+                    <th>Mensaje</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="m: ${mensajes}" th:classappend="${m.leido} ? 'leido' : ''">
+
+                    <td>
+                        <form th:action="@{'/admin/mensajes/leido/' + ${m.id}}" method="post">
+                            <input type="checkbox" th:checked="${m.leido}" onchange="this.form.submit()">
+                        </form>
+                    </td>
+                    <td class="texto" th:text="${m.nombre}"></td>
+                    <td class="texto" th:text="${m.contacto}"></td>
+                    <td class="texto" th:text="${m.mensaje}"></td>
+                    <td>
+                        <form th:action="@{'/admin/mensajes/eliminar/' + ${m.id}}" method="post">
+                            <button class="eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

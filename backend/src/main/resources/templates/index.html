@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Educación Básica Especial - Bienvenido</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+<body>
+    <div th:replace="~{layouts/header :: header}"></div>
+    <div th:replace="~{layouts/nav :: nav}"></div>
+        <section class="hero">
+            <div class="container">
+                <div class="texto">
+                    <h3>Transformamos desafíos en logros, con amor y educación</h3>
+                    <p>En el Centro de Educación Básica Especial, queremos garantizar el futuro de pequeños que sabemos que son capaces de soñar en grande.</p>
+                    <a th:href="@{/about}"><button class="boton"><span>Conoce más</span></button></a>
+                </div>
+
+                <div>
+                    <a href="https://www.google.com/maps/place/Centro+de+Educación+Especial/@-7.1609698,-78.5060322,20.25z/data=!4m6!3m5!1s0x91b25ae250400001:0xe0c2c3a14292809a!8m2!3d-7.161356!4d-78.5058259!16s%2Fg%2F11k4yby8xt?entry=ttu"
+                    target="_blank"
+                    class="hero-map-link">
+                    <img th:src="@{/img/CEBE1.jpg}" class="imagen" alt="Ubicación del CEBE Cajamarca">
+                    </a>
+                </div>
+            </div>
+        </section>
+        <main>
+            <section>
+                <div>
+                    <img th:src="@{/img/CEBE2.jpg}" alt="imagen" class="imagen">
+                </div>
+                <div class="texto">
+                    <h3>¿Quiénes somos?</h3>
+                    <p>
+                        El Centro de Educación Básica Especial (CEBE) Cajamarca es una institución pública de la modalidad de Educación Básica Especial (EBE), que brinda atención educativa integral a niños, niñas, adolescentes y jóvenes de 0 a 20 años con discapacidad. Nuestros servicios comprenden el Programa de Intervención Temprana (PRITE), los niveles de Inicial y Primaria, así como el Servicio de Apoyo y Asesoramiento para la Atención de las Necesidades Educativas Especiales (SAANEE), en coordinación con instituciones de Educación Básica Regular.
+                    </p>
+                </div>
+            </section>
+            <section>
+                <div class="texto">
+                    <h3>¿Qué ofrecemos?</h3>
+                    <p>
+                        Nuestra labor se sustenta en un enfoque de inclusión, equidad e interculturalidad, promoviendo el desarrollo integral de competencias, habilidades socioemocionales y autonomía de los estudiantes, en concordancia con el Currículo Nacional de la Educación Básica y las disposiciones del MINEDU. Para ello, contamos con un equipo interdisciplinario comprometido, innovador, resiliente, empático e investigador, que actúa en corresponsabilidad con las familias y la comunidad educativa, dentro de la jurisdicción de la UGEL Cajamarca.
+                    </p>
+                </div>
+                <div>
+                    <img th:src="@{/img/CEBE3.jpg}" alt="imagen" class="imagen">
+                </div>
+            </section>
+        </main>
+        <div th:replace="~{layouts/footer :: footer}"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll("main section");
+
+            const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+                });
+                }, { threshold: 0.2 });
+
+                sections.forEach(section => observer.observe(section));
+                });
+            </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="e">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escríbenos - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/contact.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/header :: header}"></div>
+    <div th:replace="~{layouts/nav :: nav}"></div>
+    <main>
+        <div class="contact-wrapper">
+            <h2>Contáctanos</h2>
+            <p class="subtitle">Envíanos tu mensaje y nos comunicaremos contigo.</p>
+
+            <form class="form-contact" autocomplete="off" method="post" th:action="@{/contact}">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contacto">Correo o teléfono</label>
+                    <input id="contacto" name="contacto" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="contenido" rows="6" maxlength="255" required
+                        oninput="updateCharCount()"></textarea>
+                    <small id="charCount">0/255</small>
+                    <small id="charWarning" style="color: red; display: none;">¡El mensaje es demasiado largo!</small>
+                </div>
+
+                <button type="submit" class="btn-enviar" id="submitButton" disabled>Enviar</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function updateCharCount() {
+            const message = document.getElementById('mensaje');
+            const charCount = message.value.length;
+            const maxLength = 255;
+
+            document.getElementById('charCount').textContent = `${charCount}/${maxLength}`;
+
+            if (charCount > maxLength) {
+                document.getElementById('charWarning').style.display = 'inline';
+            } else {
+                document.getElementById('charWarning').style.display = 'none';
+            }
+
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = (charCount === 0 || charCount > maxLength);
+        }
+    </script>
+    <div th:replace="~{layouts/footer :: footer}"></div>
+</body>
+
+</html>

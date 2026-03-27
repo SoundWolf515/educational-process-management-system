@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+    <header th:fragment="header" class="cebe-header">
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+        <a class="redirect" th:href="@{/}">
+            <img th:src="@{/img/logotipo.png}" alt="Logo" class="logo">
+            <h1>Centro de Educación Básica Especial Cajamarca</h1>
+        </a>
+        
+        <a th:href="@{/login}">
+            <button class="btn-acceder">
+                Acceder 
+            <span class="icono-flecha">➜</span>
+        </button>
+        </a>
+    </header>

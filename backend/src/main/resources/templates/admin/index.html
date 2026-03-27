@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main class="bienvenida">
+        <h3 th:if="${usuario != null}" th:text="'Buenos días, ' + ${#strings.toLowerCase(usuario.rol)}">
+            Buenos días, rol
+        </h3>
+        <h5 id="hora"></h5>
+        <a th:href="@{/admin/photo}"><button>Cambiar foto de perfil</button></a>
+        <a th:href="@{/admin/password}"><button>Cambiar contraseña</button></a>
+    </main>
+    <script>
+        function actualizarSaludoYHora() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = String(now.getMinutes()).padStart(2, "0");
+
+            let saludo = "";
+            if (h >= 5 && h < 12) {
+                saludo = "Buenos días";
+            } else if (h >= 12 && h < 19) {
+                saludo = "Buenas tardes";
+            } else {
+                saludo = "Buenas noches";
+            }
+
+            const h3 = document.querySelector("main.bienvenida h3");
+            const rol = h3.textContent.split(",")[1] || " *rol*";
+            h3.textContent = `${saludo},${rol}`;
+
+            document.getElementById('hora').textContent =
+                `${String(h).padStart(2, "0")}:${m}`;
+        }
+
+        actualizarSaludoYHora();
+
+        setInterval(actualizarSaludoYHora, 1000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+/* ======= NAV SIDEBAR ======= */
+
+.sidebar{
+    background-color: #26667F;
+    font-family: "Montserrat";
+    color: white;
+    width: 22%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position:fixed;
+    top: 0;
+    left: 0;
+
+    box-shadow: 5px 0px 20px rgba(0,0,0,0.4);
+}
+
+/* ======= USUARIO ======= */
+
+.usuario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 20px;
+}
+.usuario h3{
+    margin: 15px 0 5px 0;
+    font-size: 26px;
+    font-weight: 700;
+}
+.usuario h5{
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+.foto_perfil {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+    box-shadow: 0 0 20px #AEE8FF;
+}
+
+
+.foto_perfil:hover{
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* ======= SEPARADORES ======= */
+
+hr{
+    width: 70%;
+    border: none;
+    border-top: 1px solid #184050;
+    margin: 25px 0;
+}
+
+/* ======= MENU ======= */
+
+.menu{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.menu li{
+    width: 100%;
+}
+
+.menu a{
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    
+    font-weight: 400;
+    transition: background 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.menu li:hover{
+    background-color: #184050;
+    letter-spacing: 1px;
+}
+
+/* ======= TITULOS DE SECCION ======= */
+
+.titulo-seccion{
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* ======= LOGOUT ======= */
+
+.logout{
+    margin-top: auto;
+    width: 100%;
+    padding: 15px 0;
+
+    text-decoration: none;
+    color: white;
+    text-align: center;
+
+    font-weight: 600;
+    border-top: 2px solid #184050;
+
+    transition: background 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.logout:hover{
+    background-color: #184050;
+    letter-spacing: 2px;
+}
+
+.sidebar {
+    background-color: #26667F;
+    font-family: "Montserrat";
+    color: white;
+    width: 22%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    box-shadow: 5px 0px 20px rgba(0,0,0,0.4);
+}
+
+.sidebar-scroll {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 5px;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background: #184050;
+    border-radius: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-scroll .menu {
+    width: 100%;
+    text-align: center;
+}

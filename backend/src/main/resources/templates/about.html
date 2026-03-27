@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre nosotros - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+<body>
+    <div th:replace="~{layouts/header :: header}"></div>
+    <div th:replace="~{layouts/nav :: nav}"></div>
+        <main>
+            <section>
+                <div>
+                    <img th:src="@{/img/foto1.jpg}" class="imagen">
+                </div>
+                <div class="texto">
+                    <h3>Misión</h3>
+                    <p>
+                        El CEBE Cajamarca es una institución educativa estatal que ofrece servicios especializados de calidad a estudiantes con discapacidad, a través del PRITE, Inicial, Primaria y SAANEE, contribuyendo al desarrollo integral, la inclusión y la igualdad de oportunidades. Promueve la formación de estudiantes con competencias, valores y capacidades que les permitan ejercer plenamente sus derechos y participar de manera activa y digna en la sociedad.
+                    </p>
+                </div>
+            </section>
+            <section>
+                <div class="texto">
+                    <h3>Visión</h3>
+                    <p>
+                        El CEBE Cajamarca se proyecta como una institución líder a nivel regional en Educación Básica Especial, reconocida por la calidad de sus prácticas pedagógicas inclusivas, el uso de estrategias innovadoras y pertinentes, y la labor de un equipo interdisciplinario de excelencia. Aspiramos a que nuestros estudiantes desarrollen sus potencialidades, autonomía, habilidades para la vida y práctica de valores, en un entorno cálido, seguro y equitativo, que garantice su plena inclusión social y educativa.
+                    </p>
+                </div>
+                <div>
+                    <img th:src="@{/img/foto2.jpg}" class="imagen">
+                </div>
+            </section>
+            <section>
+                <div>
+                    <img th:src="@{/img/foto3.jpg}" class="imagen">
+                </div>
+                <div class="texto">
+                    <h3>Valores institucionales</h3>
+                    <p>El quehacer educativo del CEBE Cajamarca se fundamenta en los siguientes valores:</p>
+                    <ul>
+                        <li>Amor: compromiso afectivo y solidario hacia los demás.</li>
+                        <li>Honradez: respeto por lo ajeno y transparencia en el accionar.</li>
+                        <li>Tolerancia: reconocimiento y respeto de la diversidad de ideas, opiniones y formas de ser.</li>
+                        <li>Respeto: valoración de las cualidades y derechos de toda persona.</li>
+                        <li>Libertad: capacidad de tomar decisiones responsables dentro del marco de los derechos humanos.</li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <div class="texto">
+                    <ul>
+                        <li>Dignidad: reconocimiento de las potencialidades y habilidades de cada persona sin discriminación.</li>
+                        <li>Empatía: capacidad de comprender y compartir el estado emocional de los demás.</li>
+                        <li>Puntualidad: cumplimiento responsable y oportuno de las obligaciones.</li>
+                        <li>Solidaridad: apoyo y compromiso con causas comunes y en situaciones de necesidad.</li>
+                        <li>Justicia: búsqueda constante de equidad, ética y dar a cada uno lo que le corresponde.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img th:src="@{/img/foto4.jpg}" class="imagen">
+                </div>
+            </section>
+            <section>
+                <div>
+                    <img th:src="@{/img/foto5.jpg}" class="imagen">
+                </div>
+                <div class="texto">
+                    <ul>
+                        <li>Honestidad: actuar con rectitud, sinceridad y coherencia.</li>
+                        <li>Generosidad: disposición a dar y compartir sin esperar nada a cambio.</li>
+                        <li>Integridad: coherencia entre valores, pensamientos y acciones.</li>
+                        <li>Laboriosidad: perseverancia, esfuerzo y esmero en el trabajo.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        <div th:replace="~{layouts/footer :: footer}"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll("main section");
+
+            const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+                });
+                }, { threshold: 0.2 });
+
+                sections.forEach(section => observer.observe(section));
+                });
+        </script>
+</body>
+</html>

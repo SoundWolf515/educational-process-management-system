@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiantes asignados - CEBE</title>
+    <link rel="stylesheet" th:href="@{/css/adminnavstyle.css}">
+    <link rel="stylesheet" th:href="@{/css/admincontent.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="website icon" type="png" th:href="@{/img/logotipo.png}">
+</head>
+
+<body>
+    <div th:replace="~{layouts/dashboardnav :: dashboardnav}"></div>
+    <main style="display: flex; flex-direction: column; align-items: center;">
+        <h3>Mis estudiantes asignados</h3>
+
+        <div class="card card-top">
+            <div class="field campo-select">
+                <select name="idSeccion" onchange="location='?idSeccion=' + this.value">
+                    <option disabled selected>Selecciona una sección</option>
+                    <option th:each="s : ${secciones}" th:value="${s.id}"
+                        th:selected="${seccionSeleccionada != null and seccionSeleccionada == s.id}"
+                        th:text="${s.nivel + ' - ' + s.anio + ' ' + s.letra}">
+                    </option>
+                </select>
+                <label>Curso asignado</label>
+            </div>
+        </div>
+
+        <a th:href="@{/admin/misestudiantes/pdf(idSeccion=${seccionSeleccionada})}" style="text-decoration: none">
+            <button class="btn-secundario" th:disabled="${seccionSeleccionada == null}">
+                Generar lista del aula
+            </button>
+        </a>
+
+
+        <table class="tabla-estudiantes">
+            <thead>
+                <tr>
+                    <th>Estudiante</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Apoderado</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="e : ${estudiantes}">
+                    <td th:text="${e.nombreEstudiante}"></td>
+                    <td th:text="${e.direccion}"></td>
+                    <td th:text="${e.estadoMatricula}"></td>
+                    <td th:text="${e.nombreApoderado != null ? e.nombreApoderado : '(Sin asignar principal)'}"></td>
+                    <td th:text="${e.telefonoApoderado != null ? e.telefonoApoderado : '-'}"></td>
+                </tr>
+
+                <tr th:if="${estudiantes == null || estudiantes.isEmpty()}">
+                    <td colspan="6" style="text-align:center;">
+                        Seleccione una sección para ver estudiantes
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+
+</html>

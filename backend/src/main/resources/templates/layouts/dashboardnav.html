@@ -1,0 +1,55 @@
+<nav th:fragment="dashboardnav" class="sidebar" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div class="usuario">
+        <a th:href="@{/admin/index}">
+            <img class="foto_perfil" th:src="@{${usuarioLogueado != null and usuarioLogueado.foto != null 
+                          ? '/uploads/usuarios/' + usuarioLogueado.foto 
+                          : '/img/default.jpg'}}" alt="Foto de usuario">
+        </a>
+
+        <h3 th:if="${usuarioLogueado != null}" th:text="${usuarioLogueado.nombresApellidos ?: 'Usuario sin nombre'}">
+            Nombre Real
+        </h3>
+
+        <h5 th:if="${usuarioLogueado != null}" th:text="${usuarioLogueado.rol.toUpperCase()}">
+            ROL
+        </h5>
+    </div>
+
+    <div class="sidebar-scroll">
+        <hr>
+
+        <ul class="menu" sec:authorize="hasAuthority('Director')">
+            <li><a th:href="@{/admin/useradd}">Agregar personal</a></li>
+            <li><a th:href="@{/admin/userlist}">Lista de colaboradores</a></li>
+            <li><a th:href="@{/admin/mensajes}">Mensajes</a></li>
+        </ul>
+
+        <hr sec:authorize="hasAuthority('Director')">
+
+        <h4 class="titulo-seccion">Funciones</h4>
+
+        <ul class="menu">
+            <th:block sec:authorize="hasAuthority('Director')">
+                <li><a th:href="@{/admin/seccion}">Grados y secciones</a></li>
+                <li><a th:href="@{/admin/cursos}">Gestionar áreas</a></li>
+                <li><a th:href="@{/admin/matricula}">Matrícula estudiantes</a></li>
+                <li><a th:href="@{/admin/apoderados}">Gestión de apoderados</a></li>
+                <li><a th:href="@{/admin/listaestudiantes}">Lista estudiantes</a></li>
+            </th:block>
+
+            <th:block sec:authorize="hasAuthority('Docente')">
+                <li><a th:href="@{/admin/misestudiantes}">Estudiantes asignados</a></li>
+                <li><a th:href="@{/admin/notas}">Gestión de notas</a></li>
+            </th:block>
+        </ul>
+    </div>
+
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit" class="logout"
+            style="background:none; border:none; color:inherit; cursor:pointer; width:100%; text-align:left; padding: 10px 20px;">
+            Cerrar sesión
+        </button>
+    </form>
+</nav>
