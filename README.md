@@ -5,7 +5,7 @@
 <p>The system aims to support digital transformation by replacing manual processes such as student registration, staff management, classroom assignment, and grading systems.</p>
 <p>Additionally, the project evaluates the impact of this implementation through statistical analysis using the Wilcoxon signed-rank test.</p>
 
-<h2>[ES] Overview</h2>
+<h2>[ES] Descripción</h2>
 <p>Este proyecto presenta el desarrollo de un sistema web orientado a mejorar la gestión de procesos educativos en un centro de educación básica especial.</p>
 <p>El sistema permite digitalizar procesos manuales como:</p>
 <ul>
